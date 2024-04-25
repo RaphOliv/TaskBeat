@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name" translatable="false">TaskMaster</string>
+    <string name="home_title" translatable="false">TaskMaster</string>
+</resources>
