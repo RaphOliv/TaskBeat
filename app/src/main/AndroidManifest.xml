@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".CreateTaskBottomSheet"
+        <activity android:name=".CreateOrUpdateTaskBottomSheet"
             android:exported="true" />
 
     </application>
