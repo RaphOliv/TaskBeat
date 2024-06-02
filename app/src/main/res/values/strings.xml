@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name" translatable="false">Task Master</string>
     <string name="home_title" translatable="false">Task Master</string>
+    <string name="create_task_title" translatable="false">Create Task</string>
+    <string name="create" translatable="false">Create</string>
+    <string name="update_task_title" translatable="false">Update Task</string>
+    <string name="update" translatable="false">Update</string>
+    <string name="delete" translatable="false">Delete</string>
+    <string name="category_delete_title" translatable="false">Warning</string>
+    <string name="category_delete_message" translatable="false">By deleting this category all of its tasks will also be deleted. Are you sure you want to delete this category?</string>
 </resources>

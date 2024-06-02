@@ -35,9 +35,6 @@ class InfoBottomSheet(
             onActionClicked.invoke()
             dismiss()
         }
-
         return view
     }
-
-
 }
