@@ -5,8 +5,11 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
@@ -20,7 +23,11 @@ class MainActivity : AppCompatActivity() {
     private var categories = listOf<CategoryUiData>()
     private var tasks = listOf<TaskUiData>()
     private var categoriesEntity = listOf<CategoryEntity>()
+
     private lateinit var onDeleteClicked: (TaskUiData) -> Unit
+    private lateinit var rvCategory: RecyclerView
+    private lateinit var ctnContent: LinearLayout
+    private lateinit var fabCreateTask: FloatingActionButton
 
     private val categoryAdapter = CategoryListAdapter()
     private val taskAdapter by lazy {
@@ -46,12 +53,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val rvCategory = findViewById<RecyclerView>(R.id.rv_categories)
+        rvCategory = findViewById(R.id.rv_categories)
+        ctnContent = findViewById(R.id.ctn_content)
+        fabCreateTask = findViewById(R.id.fab_create_task)
         val rvTask = findViewById<RecyclerView>(R.id.rv_tasks)
-        val fabCreateTask = findViewById<FloatingActionButton>(R.id.fab_create_task)
+        val btnCreateEmpty = findViewById<Button>(R.id.btn_create_empty)
 
         val deleteIcon = ContextCompat.getDrawable(this, R.drawable.ic_delete)!!
         val swipeBackground = ColorDrawable(Color.RED)
+
+        btnCreateEmpty.setOnClickListener {
+            showCreateCategoryBottomSheet()
+        }
 
         fabCreateTask.setOnClickListener {
             showCreateUpdateTaskBottomSheet()
@@ -84,16 +97,7 @@ class MainActivity : AppCompatActivity() {
 
         categoryAdapter.setOnClickListener { selected ->
             if (selected.name == "+") {
-                val createCategoryBottomSheet = CreateCategoryBottomSheet{ categoryName ->
-                    val categoryEntity = CategoryEntity(
-                        name = categoryName,
-                        isSelected = false
-                    )
-
-                    insertCategory(categoryEntity)
-                }
-                createCategoryBottomSheet.show(supportFragmentManager, "create_category")
-
+                showCreateCategoryBottomSheet()
             } else {
                 val categoryTemp = categories.map { item ->
                     when {
@@ -225,6 +229,19 @@ class MainActivity : AppCompatActivity() {
     private fun getCategoriesFromDatabase() {
         val categoriesFromDb: List<CategoryEntity> = categoryDao.getAll()
         categoriesEntity = categoriesFromDb
+
+        GlobalScope.launch(Dispatchers.Main){
+            if(categoriesEntity.isEmpty()){
+                rvCategory.isVisible = false
+                fabCreateTask.isVisible = false
+                ctnContent.isVisible = true
+            }else{
+                rvCategory.isVisible = true
+                fabCreateTask.isVisible = true
+                ctnContent.isVisible = false
+            }
+        }
+
         val categoriesUiData = categoriesFromDb.map {
             CategoryUiData(
                 name = it.name,
@@ -351,6 +368,18 @@ class MainActivity : AppCompatActivity() {
         createTaskBottomSheet.show(
             supportFragmentManager,
             "create_task")
+    }
+
+    private fun showCreateCategoryBottomSheet() {
+        val createCategoryBottomSheet = CreateCategoryBottomSheet{ categoryName ->
+            val categoryEntity = CategoryEntity(
+                name = categoryName,
+                isSelected = false
+            )
+
+            insertCategory(categoryEntity)
+        }
+        createCategoryBottomSheet.show(supportFragmentManager, "create_category")
     }
 }
 
