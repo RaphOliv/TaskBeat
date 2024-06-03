@@ -59,17 +59,28 @@
 
     <LinearLayout
         android:id="@+id/ctn_content"
-        android:visibility="gone"
+        android:visibility=""
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:layout_margin="24dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:orientation="vertical">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/empty_category_title"
+            android:textColor="@color/purple"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/empty_category_description"
+            android:textColor="@color/purple"
+            android:textSize="18sp" />
 
         <!--<ImageView
             android:id="@+id/iv_empty"
@@ -77,16 +88,12 @@
             android:layout_height="wrap_content"
             android:src="" />-->
 
-        <TextView
+        <Button
+            android:id="@+id/btn_create_empty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:layout_margin="24dp"
-            android:text="Add a new task"
-            android:textColor="@color/purple"
-            android:textSize="28sp"
-            android:textStyle="bold"/>
+            android:layout_margin="16dp"
+            android:text="@string/create"/>
 
     </LinearLayout>
 
