@@ -35,8 +35,14 @@ class CreateOrUpdateTaskBottomSheet(
         val btnCreateOrUpdate = view.findViewById<Button>(R.id.btn_task_create)
         val spinner: Spinner = view.findViewById(R.id.category_spinner)
 
+        val selectACategory = getString(R.string.select_a_category)
+        val categoryRequired = getString(R.string.category_required)
+        val taskCreated = getString(R.string.task_created)
+        val taskUpdated = getString(R.string.task_updated)
+        val fieldsRequired = getString(R.string.fields_required)
+
         var taskCategory : String? = null
-        val categoryListTemp = mutableListOf("Select a category")
+        val categoryListTemp = mutableListOf(selectACategory)
         categoryListTemp.addAll(categoryList.map { it.name })
 
         ArrayAdapter(
@@ -58,7 +64,7 @@ class CreateOrUpdateTaskBottomSheet(
                 taskCategory = categoryListTemp[position]
                 }
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                showMessages("Category is required")
+                showMessages(categoryRequired)
             }
         }
 
@@ -77,7 +83,7 @@ class CreateOrUpdateTaskBottomSheet(
 
         btnCreateOrUpdate.setOnClickListener {
             val name = etTaskName.text.toString().trim()
-            if (taskCategory != "Select a category" && name.isNotEmpty()) {
+            if (taskCategory != (selectACategory) && name.isNotEmpty()) {
 
                 if (task == null) {
                     onCreateClicked.invoke(
@@ -88,7 +94,7 @@ class CreateOrUpdateTaskBottomSheet(
                         )
                     )
                     dismiss()
-                    showMessages("Task created")
+                    showMessages(taskCreated)
 
                 } else {
                     onUpdateClicked.invoke(
@@ -99,10 +105,10 @@ class CreateOrUpdateTaskBottomSheet(
                         )
                     )
                     dismiss()
-                    showMessages("Task updated")
+                    showMessages(taskUpdated)
                 }
             } else {
-                showMessages("Fields are required")
+                showMessages(fieldsRequired)
             }
         }
 
