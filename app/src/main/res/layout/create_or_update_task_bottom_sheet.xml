@@ -39,9 +39,11 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_task_name"
             android:layout_width="match_parent"
-            android:hint="Task Name: e.g. Call the client"
+            android:hint="@string/task_name_e_g_call_the_client"
             android:layout_height="wrap_content"
-            android:minHeight="48dp" />
+            android:minHeight="48dp"
+            android:maxLength="68"
+            android:inputType="textCapSentences"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
