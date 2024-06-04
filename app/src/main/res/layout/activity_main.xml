@@ -59,12 +59,13 @@
 
     <LinearLayout
         android:id="@+id/ctn_content"
-        android:visibility=""
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:layout_margin="24dp"
-        android:orientation="vertical">
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="24dp"
+        tools:layout_editor_absoluteY="24dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -82,21 +83,20 @@
             android:textColor="@color/purple"
             android:textSize="18sp" />
 
-        <!--<ImageView
+        <ImageView
             android:id="@+id/iv_empty"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="" />-->
+            android:layout_width="300dp"
+            android:layout_height="400dp"
+            android:src="@drawable/iv_empty" />
 
         <Button
             android:id="@+id/btn_create_empty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:text="@string/create"/>
+            android:text="@string/create" />
 
     </LinearLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
