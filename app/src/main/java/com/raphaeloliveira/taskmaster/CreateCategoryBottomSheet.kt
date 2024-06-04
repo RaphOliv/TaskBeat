@@ -24,17 +24,20 @@ class CreateCategoryBottomSheet(
 
         val btnCreateCategory = view.findViewById<Button>(R.id.btn_category_create)
         val etCategoryName = view.findViewById<TextInputEditText>(R.id.et_category_name)
+        val categoryRequired = getString(R.string.category_required)
+        val categoryCreated = getString(R.string.category_created)
 
         btnCreateCategory.setOnClickListener {
 
             if(etCategoryName.text?.isNotEmpty() == false) {
-                showMessages("Category is required")
+                showMessages(categoryRequired)
 
             } else {
 
                 val name = etCategoryName.text.toString().trim()
                 onCreateClicked(name)
                 dismiss()
+                showMessages(categoryCreated)
             }
 
         }
