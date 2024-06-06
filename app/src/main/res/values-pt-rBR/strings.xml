@@ -1,4 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Task Master</string>
+    <string name="create_category">Criar Categoria</string>
+    <string name="category_name_e_g_work">Nome da categoria: ex. TRABALHO</string>
+    <string name="task_name_e_g_call_the_client">Nome da tarefa: ex. Ligar para o cliente</string>
+    <string name="home_title">Task Master</string>
+    <string name="create_task_title">Criar Tarefa</string>
+    <string name="create">Criar</string>
+    <string name="update_task_title">Atualizar Tarefa</string>
+    <string name="update">Atualizar</string>
+    <string name="delete">Apagar</string>
+    <string name="category_delete_title">Importante</string>
+    <string name="category_delete_message">Ao excluir essa categoria, todas as suas tarefas também serão excluídas. Tem certeza de que deseja excluir essa categoria?</string>
+    <string name="empty_category_title">Nenhuma categoria encontrada!</string>
+    <string name="empty_category_description">Por favor, adicione uma categoria.</string>
+    <string name="all_category">TODOS</string>
+    <string name="select_a_category">Selecione uma categoria</string>
+    <string name="category_required">Preencham os dados</string>
+    <string name="category_created">Categoria criada</string>
+    <string name="category_deleted">Categoria apagada</string>
+    <string name="task_created">Tarefa criada</string>
+    <string name="task_updated">Tarefa atualizada</string>
+    <string name="fields_required">Preencham todos os campos</string>
+    <string name="task_deleted">Tarefa apagada</string>
 </resources>
