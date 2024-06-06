@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var rvCategory: RecyclerView
     private lateinit var ctnContent: LinearLayout
     private lateinit var fabCreateTask: FloatingActionButton
+    private var ALL: String = "ALL"
 
     private val categoryAdapter = CategoryListAdapter()
     private val taskAdapter by lazy {
@@ -59,6 +60,10 @@ class MainActivity : AppCompatActivity() {
         val rvTask = findViewById<RecyclerView>(R.id.rv_tasks)
         val btnCreateEmpty = findViewById<Button>(R.id.btn_create_empty)
 
+        ALL = getString(R.string.all_category)
+        val categoryDeleted = getString(R.string.category_deleted)
+        val taskDeleted = getString(R.string.task_deleted)
+
         val deleteIcon = ContextCompat.getDrawable(this, R.drawable.ic_delete)!!
         val swipeBackground = ColorDrawable(Color.RED)
 
@@ -75,7 +80,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         categoryAdapter.setOnLongClickListener { categoryToBeDeleted ->
-            if(categoryToBeDeleted.name != "+" && categoryToBeDeleted.name != "ALL") {
+            if(categoryToBeDeleted.name != "+" && categoryToBeDeleted.name != (ALL)){
                 val title = this.getString(R.string.category_delete_title)
                 val message = this.getString(R.string.category_delete_message)
                 val btnAction = this.getString(R.string.delete)
@@ -90,7 +95,7 @@ class MainActivity : AppCompatActivity() {
                         isSelected = categoryToBeDeleted.isSelected
                     )
                     deleteCategory(categoryEntityToBeDeleted)
-                    Toast.makeText(this, "Category deleted", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, (categoryDeleted), Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -109,7 +114,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
-                    if (selected.name != "ALL") {
+                    if (selected.name != (ALL)) {
                         filterTasksByCategoryName(selected.name)
                     } else {
                         GlobalScope.launch(Dispatchers.IO) {
@@ -139,7 +144,7 @@ class MainActivity : AppCompatActivity() {
                 category = task.category
             )
             deleteTask(taskEntityToBeDeleted)
-            Toast.makeText(this, "Task deleted", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, (taskDeleted), Toast.LENGTH_SHORT).show()
         }
 
             val itemTouchHelperCallback =
@@ -259,7 +264,7 @@ class MainActivity : AppCompatActivity() {
 
             val tempCategoryList = mutableListOf(
                 CategoryUiData(
-                    name = "ALL",
+                    name = (ALL),
                     isSelected = true
                 )
             )
