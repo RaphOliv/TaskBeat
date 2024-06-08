@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.raphaeloliveira.taskmaster"
+    namespace = "com.raphaeloliveira.taskbeat"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.raphaeloliveira.taskmaster"
+        applicationId = "com.raphaeloliveira.taskbeat"
         minSdk = 21
         targetSdk = 34
         versionCode = 1
