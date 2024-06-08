@@ -15,11 +15,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.raphaeloliveira.taskbeat.R
+import com.raphaeloliveira.taskbeat.TaskBeatApplication
 import com.raphaeloliveira.taskbeat.data.CategoryEntity
-import com.raphaeloliveira.taskbeat.data.CategoryUiData
 import com.raphaeloliveira.taskbeat.data.TaskBeatDataBase
 import com.raphaeloliveira.taskbeat.data.TaskEntity
-import com.raphaeloliveira.taskbeat.data.TaskUiData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -41,12 +40,7 @@ class MainActivity : AppCompatActivity() {
         TaskListAdapter()
     }
 
-    private val db by lazy {
-        Room.databaseBuilder(
-            applicationContext,
-            TaskBeatDataBase::class.java, "database-taskbeat"
-        ).build()
-    }
+    lateinit var db: TaskBeatDataBase
 
     private val categoryDao by lazy {
         db.getCategoryDao()
@@ -134,14 +128,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         rvCategory.adapter = categoryAdapter
-        GlobalScope.launch(Dispatchers.IO) {
-            getCategoriesFromDatabase()
-        }
-
         rvTask.adapter = taskAdapter
-        GlobalScope.launch(Dispatchers.IO) {
-            getTasksFromDatabase()
-        }
 
         onDeleteClicked = { task ->
             val taskEntityToBeDeleted = TaskEntity(
@@ -218,6 +205,17 @@ class MainActivity : AppCompatActivity() {
 
             val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
             itemTouchHelper.attachToRecyclerView(rvTask)
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        db = (application as TaskBeatApplication).db
+
+        GlobalScope.launch(Dispatchers.IO) {
+            getCategoriesFromDatabase()
+            getTasksFromDatabase()
+        }
     }
 
     private fun showInfoDialog(
