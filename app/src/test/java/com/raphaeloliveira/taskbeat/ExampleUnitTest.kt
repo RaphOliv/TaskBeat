@@ -1,4 +1,4 @@
-package com.raphaeloliveira.taskmaster
+package com.raphaeloliveira.taskbeat
 
 import org.junit.Test
 

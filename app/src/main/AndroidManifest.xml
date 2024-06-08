@@ -23,7 +23,7 @@
         </activity>
 
         <activity android:name=".presentation.MainActivity" />
-        <activity android:name=".fragment.CreateOrUpdateTaskBottomSheet"
+        <activity android:name=".presentation.CreateOrUpdateTaskBottomSheet"
             android:exported="true" />
 
         <meta-data

@@ -1,4 +1,4 @@
-package com.raphaeloliveira.taskmaster
+package com.raphaeloliveira.taskbeat.presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import android.widget.Button
 import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.textfield.TextInputEditText
-import com.raphaeloliveira.taskmaster.R.layout
+import com.raphaeloliveira.taskbeat.R
 
 
 class CreateCategoryBottomSheet(
@@ -20,7 +20,7 @@ class CreateCategoryBottomSheet(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(layout.create_category_bottom_sheet, container, false)
+        val view = inflater.inflate(R.layout.create_category_bottom_sheet, container, false)
 
         val btnCreateCategory = view.findViewById<Button>(R.id.btn_category_create)
         val etCategoryName = view.findViewById<TextInputEditText>(R.id.et_category_name)

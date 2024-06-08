@@ -1,8 +1,6 @@
-package com.raphaeloliveira.taskmaster
+package com.raphaeloliveira.taskbeat.presentation
 
-import android.media.RouteListingPreference.Item
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +12,9 @@ import android.widget.TextView
 import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.textfield.TextInputEditText
+import com.raphaeloliveira.taskbeat.R
+import com.raphaeloliveira.taskbeat.data.CategoryEntity
+import com.raphaeloliveira.taskbeat.data.TaskUiData
 
 class CreateOrUpdateTaskBottomSheet(
     private val categoryList: List<CategoryEntity>,

@@ -1,4 +1,4 @@
-package com.raphaeloliveira.taskmaster
+package com.raphaeloliveira.taskbeat.presentation
 
 import android.graphics.Canvas
 import android.graphics.Color
@@ -14,6 +14,12 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.raphaeloliveira.taskbeat.R
+import com.raphaeloliveira.taskbeat.data.CategoryEntity
+import com.raphaeloliveira.taskbeat.data.CategoryUiData
+import com.raphaeloliveira.taskbeat.data.TaskBeatDataBase
+import com.raphaeloliveira.taskbeat.data.TaskEntity
+import com.raphaeloliveira.taskbeat.data.TaskUiData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -38,7 +44,7 @@ class MainActivity : AppCompatActivity() {
     private val db by lazy {
         Room.databaseBuilder(
             applicationContext,
-            TaskMasterDataBase::class.java, "database-taskmaster"
+            TaskBeatDataBase::class.java, "database-taskbeat"
         ).build()
     }
 

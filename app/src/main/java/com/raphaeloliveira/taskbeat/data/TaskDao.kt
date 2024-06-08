@@ -1,4 +1,4 @@
-package com.raphaeloliveira.taskmaster
+package com.raphaeloliveira.taskbeat.data
 
 import androidx.room.Dao
 import androidx.room.Delete

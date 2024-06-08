@@ -1,4 +1,4 @@
-package com.raphaeloliveira.taskmaster
+package com.raphaeloliveira.taskbeat.data
 
 data class TaskUiData(
     val id: Long,

@@ -1,8 +1,9 @@
-package com.raphaeloliveira.taskmaster
+package com.raphaeloliveira.taskbeat.data
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import com.raphaeloliveira.taskbeat.data.CategoryEntity
 
 @Entity(
     foreignKeys = [
