@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.raphaeloliveira.taskbeat.R
-import com.raphaeloliveira.taskbeat.data.TaskUiData
 
 class TaskListAdapter :
     ListAdapter<TaskUiData, TaskListAdapter.TaskViewHolder>(diffCallback()) {

@@ -14,7 +14,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.textfield.TextInputEditText
 import com.raphaeloliveira.taskbeat.R
 import com.raphaeloliveira.taskbeat.data.CategoryEntity
-import com.raphaeloliveira.taskbeat.data.TaskUiData
 
 class CreateOrUpdateTaskBottomSheet(
     private val categoryList: List<CategoryEntity>,
