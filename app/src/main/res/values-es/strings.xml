@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">Task Master</string>
-    <string name="home_title" translatable="false">Task Master</string>
+    <string name="app_name" translatable="false">Task Beat</string>
+    <string name="home_title" translatable="false">Task Beat</string>
     <string name="create_task_title">Crear Tarea</string>
     <string name="create">Crear</string>
     <string name="update_task_title">Actualizar Tarea</string>
