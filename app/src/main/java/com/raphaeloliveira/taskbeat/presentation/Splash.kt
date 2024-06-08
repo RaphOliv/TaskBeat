@@ -1,10 +1,11 @@
-package com.raphaeloliveira.taskmaster
+package com.raphaeloliveira.taskbeat.presentation
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
+import android.view.animation.AnimationUtils
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import com.raphaeloliveira.taskbeat.R
 
 class Splash : AppCompatActivity() {
 
@@ -14,7 +15,12 @@ class Splash : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.splash)
 
-        Handler(Looper.getMainLooper()).postDelayed({
+        val fadeInAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_in_animation)
+        val splashLayout = findViewById<LinearLayout>(R.id.ll_splash)
+
+        splashLayout.startAnimation(fadeInAnimation)
+
+        splashLayout.postDelayed({
             val intent = Intent(this@Splash, MainActivity::class.java)
             startActivity(intent)
             finish()
