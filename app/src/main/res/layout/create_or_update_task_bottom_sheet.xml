@@ -41,6 +41,7 @@
             android:layout_width="match_parent"
             android:hint="@string/task_name_e_g_call_the_client"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/josefin_sans_semibold"
             android:minHeight="48dp"
             android:maxLength="68"
             android:inputType="textCapSentences"/>

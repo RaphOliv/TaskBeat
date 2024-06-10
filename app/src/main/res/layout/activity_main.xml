@@ -74,6 +74,7 @@
             android:text="@string/empty_category_title"
             android:textColor="@color/purple"
             android:textSize="28sp"
+            android:fontFamily="@font/josefin_sans_semibold"
             android:textStyle="bold" />
 
         <TextView
@@ -81,7 +82,8 @@
             android:layout_height="wrap_content"
             android:text="@string/empty_category_description"
             android:textColor="@color/purple"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:fontFamily="@font/josefin_sans_semibold"/>
 
         <ImageView
             android:id="@+id/iv_empty"
