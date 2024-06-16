@@ -73,6 +73,23 @@ class MainActivity : AppCompatActivity() {
 
         fabCreateTask.setOnClickListener {
             showCreateUpdateTaskBottomSheet()
+
+            /*TaskBeatApplication.TaskBeatGlobals.selectedCategory = ALL*/
+
+            val categoryTemp = categories.map { item ->
+                when {
+                    item.name == ALL -> item.copy(isSelected = true)
+                    item.isSelected -> item.copy(isSelected = false)
+                    else -> item
+                }
+            }
+
+            /*GlobalScope.launch(Dispatchers.IO) {
+                getTasksFromDatabase()
+            }*/
+
+            categoryAdapter.submitList(categoryTemp)
+
         }
 
         taskAdapter.setOnClickListener {task ->
@@ -151,10 +168,9 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                            val position = viewHolder.adapterPosition
-                            val task = tasks[position]
-                            onDeleteClicked.invoke(task)
-
+                        val taskViewHolder = viewHolder as TaskListAdapter.TaskViewHolder
+                        val task = taskViewHolder.getTask()
+                        onDeleteClicked.invoke(task)
                     }
 
                     override fun onChildDraw(
@@ -212,6 +228,14 @@ class MainActivity : AppCompatActivity() {
 
         db = (application as TaskBeatApplication).db
 
+        GlobalScope.launch(Dispatchers.IO) {
+            getCategoriesFromDatabase()
+            getTasksFromDatabase()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
         GlobalScope.launch(Dispatchers.IO) {
             getCategoriesFromDatabase()
             getTasksFromDatabase()
