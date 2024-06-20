@@ -12,7 +12,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.Room
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.raphaeloliveira.taskbeat.R
 import com.raphaeloliveira.taskbeat.TaskBeatApplication
@@ -74,8 +73,6 @@ class MainActivity : AppCompatActivity() {
         fabCreateTask.setOnClickListener {
             showCreateUpdateTaskBottomSheet()
 
-            /*TaskBeatApplication.TaskBeatGlobals.selectedCategory = ALL*/
-
             val categoryTemp = categories.map { item ->
                 when {
                     item.name == ALL -> item.copy(isSelected = true)
@@ -83,10 +80,6 @@ class MainActivity : AppCompatActivity() {
                     else -> item
                 }
             }
-
-            /*GlobalScope.launch(Dispatchers.IO) {
-                getTasksFromDatabase()
-            }*/
 
             categoryAdapter.submitList(categoryTemp)
 
@@ -141,7 +134,6 @@ class MainActivity : AppCompatActivity() {
 
                 categoryAdapter.submitList(categoryTemp)
             }
-
         }
 
         rvCategory.adapter = categoryAdapter
@@ -409,10 +401,10 @@ class MainActivity : AppCompatActivity() {
                 name = categoryName,
                 isSelected = false
             )
-
             insertCategory(categoryEntity)
         }
-        createCategoryBottomSheet.show(supportFragmentManager, "create_category")
+        createCategoryBottomSheet.show(
+            supportFragmentManager, "create_category")
     }
 }
 
