@@ -27,16 +27,26 @@ class TaskListAdapter :
             holder.bind(category, callBack)
         }
 
-        class TaskViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-            private val tvCategory = view.findViewById<TextView>(R.id.tv_category_name)
-            private val tvName = view.findViewById<TextView>(R.id.tv_task_name)
-            fun bind(task: TaskUiData, callBack: (TaskUiData) -> Unit) {
-                tvName.text = task.name
-                tvCategory.text = task.category
+        class TaskViewHolder(private val view: View ) : RecyclerView.ViewHolder(view) {
+            private lateinit var task: TaskUiData
+            private val tvTaskName: TextView = view.findViewById(R.id.tv_task_name)
+            private val tvCategoryName: TextView = view.findViewById(R.id.tv_category_name)
 
-                view.setOnClickListener {
+            fun bind(
+                task: TaskUiData,
+                callBack: (TaskUiData) -> Unit,
+            ){
+                this.task = task
+                tvTaskName.text = task.name
+                tvCategoryName.text = task.category
+
+               view.setOnClickListener {
                     callBack.invoke(task)
                 }
+            }
+
+            fun getTask(): TaskUiData {
+                return task
             }
         }
 
