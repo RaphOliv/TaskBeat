@@ -1,13 +1,11 @@
 package com.raphaeloliveira.taskbeat.presentation
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.raphaeloliveira.taskbeat.R
+import com.raphaeloliveira.taskbeat.databinding.ItemCategoryBinding
 
 class CategoryListAdapter :
     ListAdapter<CategoryUiData, CategoryListAdapter.CategoryViewHolder>(diffCallback())  {
@@ -24,9 +22,8 @@ class CategoryListAdapter :
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
-            val view =
-                LayoutInflater.from(parent.context).inflate(R.layout.item_category, parent, false)
-            return CategoryViewHolder(view)
+            val binding = ItemCategoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            return CategoryViewHolder(binding)
         }
 
         override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
@@ -34,21 +31,20 @@ class CategoryListAdapter :
             holder.bind(category, onClick, onLongClick)
         }
 
-        class CategoryViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-            private val tvCategory = view.findViewById<TextView>(R.id.tv_category)
+        class CategoryViewHolder(private val binding: ItemCategoryBinding) : RecyclerView.ViewHolder(binding.root) {
             fun bind(
                 category: CategoryUiData,
                 onClick: (CategoryUiData) -> Unit,
                 onLongClick: (CategoryUiData) -> Unit
             ){
-                tvCategory.text = category.name
-                tvCategory.isSelected = category.isSelected
+                binding.tvCategory.text = category.name
+                binding.tvCategory.isSelected = category.isSelected
 
-                view.setOnClickListener {
+                binding.root.setOnClickListener {
                     onClick.invoke(category)
                 }
 
-                view.setOnLongClickListener {
+                binding.root.setOnLongClickListener {
                     onLongClick.invoke(category)
                     true
                 }

@@ -5,33 +5,31 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.raphaeloliveira.taskbeat.R
 import com.raphaeloliveira.taskbeat.TaskBeatApplication
 import com.raphaeloliveira.taskbeat.data.CategoryEntity
 import com.raphaeloliveira.taskbeat.data.TaskBeatDataBase
 import com.raphaeloliveira.taskbeat.data.TaskEntity
+import com.raphaeloliveira.taskbeat.databinding.ActivityMainBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainBinding
+
     private var categories = listOf<CategoryUiData>()
     private var tasks = listOf<TaskUiData>()
     private var categoriesEntity = listOf<CategoryEntity>()
 
     private lateinit var onDeleteClicked: (TaskUiData) -> Unit
-    private lateinit var rvCategory: RecyclerView
-    private lateinit var ctnContent: LinearLayout
-    private lateinit var fabCreateTask: FloatingActionButton
+
     private var ALL: String = "ALL"
 
     private val categoryAdapter = CategoryListAdapter()
@@ -51,13 +49,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        rvCategory = findViewById(R.id.rv_categories)
-        ctnContent = findViewById(R.id.ctn_content)
-        fabCreateTask = findViewById(R.id.fab_create_task)
-        val rvTask = findViewById<RecyclerView>(R.id.rv_tasks)
-        val btnCreateEmpty = findViewById<Button>(R.id.btn_create_empty)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         ALL = getString(R.string.all_category)
         val categoryDeleted = getString(R.string.category_deleted)
@@ -66,11 +59,11 @@ class MainActivity : AppCompatActivity() {
         val deleteIcon = ContextCompat.getDrawable(this, R.drawable.ic_delete)!!
         val swipeBackground = ColorDrawable(Color.RED)
 
-        btnCreateEmpty.setOnClickListener {
+        binding.btnCreateEmpty.setOnClickListener {
             showCreateCategoryBottomSheet()
         }
 
-        fabCreateTask.setOnClickListener {
+        binding.fabCreateTask.setOnClickListener {
             showCreateUpdateTaskBottomSheet()
 
             val categoryTemp = categories.map { item ->
@@ -136,8 +129,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        rvCategory.adapter = categoryAdapter
-        rvTask.adapter = taskAdapter
+        binding.rvCategories.adapter = categoryAdapter
+        binding.rvTasks.adapter = taskAdapter
 
         onDeleteClicked = { task ->
             val taskEntityToBeDeleted = TaskEntity(
@@ -212,7 +205,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
             val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
-            itemTouchHelper.attachToRecyclerView(rvTask)
+            itemTouchHelper.attachToRecyclerView(binding.rvTasks)
     }
 
     override fun onStart() {
@@ -257,13 +250,13 @@ class MainActivity : AppCompatActivity() {
 
         GlobalScope.launch(Dispatchers.Main){
             if(categoriesEntity.isEmpty()){
-                rvCategory.isVisible = false
-                fabCreateTask.isVisible = false
-                ctnContent.isVisible = true
+                binding.rvCategories.isVisible = false
+                binding.fabCreateTask.isVisible = false
+                binding.ctnContent.isVisible = true
             }else{
-                rvCategory.isVisible = true
-                fabCreateTask.isVisible = true
-                ctnContent.isVisible = false
+                binding.rvCategories.isVisible = true
+                binding.fabCreateTask.isVisible = true
+                binding.ctnContent.isVisible = false
             }
         }
 
@@ -336,6 +329,14 @@ class MainActivity : AppCompatActivity() {
     private fun deleteTask(taskEntity: TaskEntity) {
         GlobalScope.launch(Dispatchers.IO) {
             taskDao.delete(taskEntity)
+            val categoryTemp = categories.map { item ->
+                when {
+                    item.name == ALL -> item.copy(isSelected = true)
+                    item.isSelected -> item.copy(isSelected = false)
+                    else -> item
+                }
+            }
+            categoryAdapter.submitList(categoryTemp)
             getTasksFromDatabase()
         }
     }
