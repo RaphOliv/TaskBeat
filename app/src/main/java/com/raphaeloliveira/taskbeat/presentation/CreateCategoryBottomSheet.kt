@@ -4,37 +4,37 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.textfield.TextInputEditText
 import com.raphaeloliveira.taskbeat.R
+import com.raphaeloliveira.taskbeat.databinding.CreateCategoryBottomSheetBinding
 
 
 class CreateCategoryBottomSheet(
     private val onCreateClicked: (String) -> Unit) :
     BottomSheetDialogFragment() {
 
+        private lateinit var binding: CreateCategoryBottomSheetBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.create_category_bottom_sheet, container, false)
+        binding = CreateCategoryBottomSheetBinding.inflate(inflater, container, false)
+        val view = binding.root
 
-        val btnCreateCategory = view.findViewById<Button>(R.id.btn_category_create)
-        val etCategoryName = view.findViewById<TextInputEditText>(R.id.et_category_name)
         val categoryRequired = getString(R.string.category_required)
         val categoryCreated = getString(R.string.category_created)
 
-        btnCreateCategory.setOnClickListener {
+        binding.btnCategoryCreate.setOnClickListener {
 
-            if(etCategoryName.text?.isNotEmpty() == false) {
+            if(binding.etCategoryName.text?.isNotEmpty() == false) {
                 showMessages(categoryRequired)
 
             } else {
 
-                val name = etCategoryName.text.toString().trim()
+                val name = binding.etCategoryName.text.toString().trim()
                 onCreateClicked(name)
                 dismiss()
                 showMessages(categoryCreated)

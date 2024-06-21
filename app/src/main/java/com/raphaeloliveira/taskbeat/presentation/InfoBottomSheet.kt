@@ -4,10 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.raphaeloliveira.taskbeat.R
+import com.raphaeloliveira.taskbeat.databinding.InfoBottomSheetBinding
 
 
 class InfoBottomSheet(
@@ -17,22 +15,21 @@ class InfoBottomSheet(
     private val onActionClicked: () -> Unit
 ) : BottomSheetDialogFragment() {
 
+    private lateinit var binding: InfoBottomSheetBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.info_bottom_sheet, container, false)
+        binding = InfoBottomSheetBinding.inflate(inflater, container, false)
+        val view = binding.root
 
-        val tvInfoTitle = view.findViewById<TextView>(R.id.tv_info_title)
-        val tvMessage = view.findViewById<TextView>(R.id.tv_info_message)
-        val btnAction = view.findViewById<Button>(R.id.btn_info_delete)
+        binding.tvInfoTitle.text = title
+        binding.tvInfoMessage.text = message
+        binding.btnInfoDelete.text = action
 
-        tvInfoTitle.text = title
-        tvMessage.text = message
-        btnAction.text = action
-
-        btnAction.setOnClickListener {
+        binding.btnInfoDelete.setOnClickListener {
             onActionClicked.invoke()
             dismiss()
         }
