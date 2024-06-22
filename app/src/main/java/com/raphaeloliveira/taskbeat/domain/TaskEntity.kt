@@ -1,4 +1,4 @@
-package com.raphaeloliveira.taskbeat.data
+package com.raphaeloliveira.taskbeat.domain
 
 import androidx.room.Entity
 import androidx.room.ForeignKey

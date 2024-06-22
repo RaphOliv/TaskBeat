@@ -1,4 +1,4 @@
-package com.raphaeloliveira.taskbeat.presentation
+package com.raphaeloliveira.taskbeat.domain
 
 
 data class CategoryUiData(
