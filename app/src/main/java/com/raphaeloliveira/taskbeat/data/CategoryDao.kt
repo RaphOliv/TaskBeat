@@ -5,6 +5,8 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.raphaeloliveira.taskbeat.TaskBeatApplication
+import org.koin.dsl.module
 
 @Dao
 interface CategoryDao {
@@ -22,4 +24,3 @@ interface CategoryDao {
     fun delete(categoryEntity: CategoryEntity)
 
 }
-
