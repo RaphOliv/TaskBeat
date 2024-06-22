@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.storage.CacheResetOnProcessCanceled.enabled
-
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -45,20 +43,22 @@ dependencies {
 
     val room_version = "2.6.1"
 
-    implementation("androidx.core:core-ktx:1.13.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.11.0")
+    implementation("androidx.core:core-ktx:1.13.1")
+    implementation("androidx.appcompat:appcompat:1.7.0")
+    implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation ("androidx.core:core-splashscreen:1.0.1")
-    implementation ("androidx.navigation:navigation-fragment-ktx:2.3.5")
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.7.7")
 
-    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
-    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0")
-    kapt ("androidx.lifecycle:lifecycle-compiler:2.3.1")
+    implementation ("io.insert-koin:koin-android:3.1.3")
+
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.8.2")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.2")
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.8.2")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    kapt ("androidx.lifecycle:lifecycle-compiler:2.8.2")
     implementation ("androidx.lifecycle:lifecycle-service:2.8.2")
-    implementation ("androidx.lifecycle:lifecycle-process:2.3.1")
+    implementation ("androidx.lifecycle:lifecycle-process:2.8.2")
     implementation ("androidx.lifecycle:lifecycle-reactivestreams-ktx:2.8.2")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-savedstate:2.8.2")
 
@@ -68,7 +68,7 @@ dependencies {
     implementation("androidx.room:room-ktx:$room_version")
     implementation("androidx.room:room-guava:$room_version")
 
-    testImplementation("androidx.arch.core:core-testing:2.1.0")
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
