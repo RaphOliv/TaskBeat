@@ -12,13 +12,16 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.raphaeloliveira.taskbeat.R
 import com.raphaeloliveira.taskbeat.TaskBeatApplication
+import com.raphaeloliveira.taskbeat.data.CategoryDao
 import com.raphaeloliveira.taskbeat.data.CategoryEntity
 import com.raphaeloliveira.taskbeat.data.TaskBeatDataBase
+import com.raphaeloliveira.taskbeat.data.TaskDao
 import com.raphaeloliveira.taskbeat.data.TaskEntity
 import com.raphaeloliveira.taskbeat.databinding.ActivityMainBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
 
@@ -39,13 +42,8 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var db: TaskBeatDataBase
 
-    private val categoryDao by lazy {
-        db.getCategoryDao()
-    }
-
-    private val taskDao by lazy {
-        db.getTaskDao()
-    }
+    private val categoryDao: CategoryDao by inject()
+    private val taskDao: TaskDao by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

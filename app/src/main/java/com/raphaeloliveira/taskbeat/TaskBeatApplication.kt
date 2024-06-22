@@ -3,8 +3,7 @@ package com.raphaeloliveira.taskbeat
 import android.app.Application
 import androidx.room.Room
 import com.raphaeloliveira.taskbeat.data.TaskBeatDataBase
-import com.raphaeloliveira.taskbeat.module.categoryDatabaseModule
-import com.raphaeloliveira.taskbeat.module.taskDatabaseModule
+import com.raphaeloliveira.taskbeat.di.appModules
 import org.koin.core.context.startKoin
 
 class TaskBeatApplication : Application(){
@@ -20,10 +19,8 @@ class TaskBeatApplication : Application(){
         ).build()
 
         startKoin {
-            modules(listOf
-                (taskDatabaseModule(this@TaskBeatApplication),
-                categoryDatabaseModule(this@TaskBeatApplication)))
-        }
+            modules(appModules.map { it(this@TaskBeatApplication) })
+        } 
     }
 
     fun getDatabase(): TaskBeatDataBase {
