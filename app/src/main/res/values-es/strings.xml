@@ -8,19 +8,19 @@
     <string name="update">Actualizar</string>
     <string name="delete">Borrar</string>
     <string name="category_delete_title">Advertencia</string>
-    <string name="category_delete_message">Al eliminar esta categoría se eliminarán también todas sus tareas. ¿Está seguro de que desea eliminar esta categoría?</string>
+    <string name="category_delete_message">Cuando borre esta categoría, también se borrarán todas sus tareas. Está seguro de que desea borrar esta categoría?</string>
     <string name="empty_category_title">No se han encontrado categorías.</string>
     <string name="empty_category_description">Por favor, añada una categoría.</string>
     <string name="create_category">Crear Categoría</string>
     <string name="category_name_e_g_work">Nombre de la categoría: p. ej. TRABAJO</string>
     <string name="task_name_e_g_call_the_client">Nombre de la tarea: p. ej. Llamar al cliente</string>
-    <string name="all_category">TODOS</string>
+    <string name="all_category">TODAS</string>
     <string name="select_a_category">Seleccione una categoría</string>
     <string name="category_required">Rellene los datos</string>
     <string name="category_created">Categoría creada</string>
-    <string name="category_deleted">Categoría eliminada</string>
+    <string name="category_deleted">Categoría borrada</string>
     <string name="task_created">Tarea creada</string>
     <string name="task_updated">Tarea Actualizada</string>
     <string name="fields_required">Rellene los datos</string>
-    <string name="task_deleted">Tarea eliminada</string>
+    <string name="task_deleted">Tarea borrada</string>
 </resources>
