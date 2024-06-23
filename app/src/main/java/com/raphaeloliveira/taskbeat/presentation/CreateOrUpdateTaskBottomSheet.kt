@@ -9,8 +9,9 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.raphaeloliveira.taskbeat.R
-import com.raphaeloliveira.taskbeat.data.CategoryEntity
+import com.raphaeloliveira.taskbeat.domain.CategoryEntity
 import com.raphaeloliveira.taskbeat.databinding.CreateOrUpdateTaskBottomSheetBinding
+import com.raphaeloliveira.taskbeat.domain.TaskUiData
 
 class CreateOrUpdateTaskBottomSheet(
     private val categoryList: List<CategoryEntity>,

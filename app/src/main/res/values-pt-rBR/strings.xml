@@ -14,7 +14,7 @@
     <string name="category_delete_message">Ao excluir essa categoria, todas as suas tarefas também serão excluídas. Tem certeza de que deseja excluir essa categoria?</string>
     <string name="empty_category_title">Nenhuma categoria encontrada!</string>
     <string name="empty_category_description">Por favor, adicione uma categoria.</string>
-    <string name="all_category">TODOS</string>
+    <string name="all_category">TODAS</string>
     <string name="select_a_category">Selecione uma categoria</string>
     <string name="category_required">Preencham os dados</string>
     <string name="category_created">Categoria criada</string>

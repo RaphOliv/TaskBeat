@@ -13,11 +13,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.raphaeloliveira.taskbeat.R
 import com.raphaeloliveira.taskbeat.TaskBeatApplication
 import com.raphaeloliveira.taskbeat.data.CategoryDao
-import com.raphaeloliveira.taskbeat.data.CategoryEntity
+import com.raphaeloliveira.taskbeat.domain.CategoryEntity
 import com.raphaeloliveira.taskbeat.data.TaskBeatDataBase
 import com.raphaeloliveira.taskbeat.data.TaskDao
-import com.raphaeloliveira.taskbeat.data.TaskEntity
+import com.raphaeloliveira.taskbeat.domain.TaskEntity
 import com.raphaeloliveira.taskbeat.databinding.ActivityMainBinding
+import com.raphaeloliveira.taskbeat.domain.CategoryUiData
+import com.raphaeloliveira.taskbeat.domain.TaskUiData
+import com.raphaeloliveira.taskbeat.usecase.category.CreateCategoryUseCase
+import com.raphaeloliveira.taskbeat.usecase.category.DeleteCategoryUseCase
+import com.raphaeloliveira.taskbeat.usecase.task.CreateTaskUseCase
+import com.raphaeloliveira.taskbeat.usecase.task.UpdateTaskUseCase
+import com.raphaeloliveira.taskbeat.usecase.task.DeleteTaskUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -45,6 +52,12 @@ class MainActivity : AppCompatActivity() {
     private val categoryDao: CategoryDao by inject()
     private val taskDao: TaskDao by inject()
 
+    private val createTaskUseCase by lazy { CreateTaskUseCase(taskDao) }
+    private val createCategoryUseCase by lazy { CreateCategoryUseCase(categoryDao) }
+    private val DeleteCategoryUseCase by lazy { DeleteCategoryUseCase(categoryDao,taskDao) }
+    private val UpdateTaskUseCase by lazy { UpdateTaskUseCase(taskDao) }
+    private val DeleteTaskUseCase by lazy { DeleteTaskUseCase(taskDao) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -71,9 +84,10 @@ class MainActivity : AppCompatActivity() {
                     else -> item
                 }
             }
-
             categoryAdapter.submitList(categoryTemp)
-
+            GlobalScope.launch {
+                getTasksFromDatabase()
+            }
         }
 
         taskAdapter.setOnClickListener {task ->
@@ -95,7 +109,11 @@ class MainActivity : AppCompatActivity() {
                         name = categoryToBeDeleted.name,
                         isSelected = categoryToBeDeleted.isSelected
                     )
-                    deleteCategory(categoryEntityToBeDeleted)
+                    GlobalScope.launch {
+                        DeleteCategoryUseCase.execute(categoryEntityToBeDeleted)
+                        getCategoriesFromDatabase()
+                        getTasksFromDatabase()
+                    }
                     Toast.makeText(this, (categoryDeleted), Toast.LENGTH_SHORT).show()
                 }
             }
@@ -136,7 +154,18 @@ class MainActivity : AppCompatActivity() {
                 name = task.name,
                 category = task.category
             )
-            deleteTask(taskEntityToBeDeleted)
+            val categoryTemp = categories.map { item ->
+                when {
+                    item.name == ALL -> item.copy(isSelected = true)
+                    item.isSelected -> item.copy(isSelected = false)
+                    else -> item
+                }
+            }
+            categoryAdapter.submitList(categoryTemp)
+            GlobalScope.launch {
+                DeleteTaskUseCase.execute(taskEntityToBeDeleted)
+                getTasksFromDatabase()
+            }
             Toast.makeText(this, (taskDeleted), Toast.LENGTH_SHORT).show()
         }
 
@@ -303,52 +332,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun insertCategory(categoryEntity: CategoryEntity){
-        GlobalScope.launch(Dispatchers.IO) {
-            categoryDao.insert(categoryEntity)
-            getCategoriesFromDatabase()
-        }
-    }
-
-    private fun insertTask(taskEntity: TaskEntity){
-        GlobalScope.launch(Dispatchers.IO) {
-            taskDao.insert(taskEntity)
-            getTasksFromDatabase()
-        }
-    }
-
-    private fun updateTask(taskEntity: TaskEntity){
-        GlobalScope.launch(Dispatchers.IO) {
-            taskDao.update(taskEntity)
-            getTasksFromDatabase()
-        }
-    }
-
-    private fun deleteTask(taskEntity: TaskEntity) {
-        GlobalScope.launch(Dispatchers.IO) {
-            taskDao.delete(taskEntity)
-            val categoryTemp = categories.map { item ->
-                when {
-                    item.name == ALL -> item.copy(isSelected = true)
-                    item.isSelected -> item.copy(isSelected = false)
-                    else -> item
-                }
-            }
-            categoryAdapter.submitList(categoryTemp)
-            getTasksFromDatabase()
-        }
-    }
-
-    private fun deleteCategory(categoryEntity: CategoryEntity) {
-        GlobalScope.launch(Dispatchers.IO) {
-            val tasksToBeDeleted = taskDao.getAllByCategoryName(categoryEntity.name)
-            taskDao.deleteAll(tasksToBeDeleted)
-            categoryDao.delete(categoryEntity)
-            getCategoriesFromDatabase()
-            getTasksFromDatabase()
-        }
-    }
-
     private fun filterTasksByCategoryName(categoryName: String){
         GlobalScope.launch(Dispatchers.IO) {
             val tasksFromDb: List<TaskEntity> = taskDao.getAllByCategoryName(categoryName)
@@ -376,7 +359,10 @@ class MainActivity : AppCompatActivity() {
                     name = taskToBeCreated.name,
                     category = taskToBeCreated.category
                 )
-                insertTask(taskEntityToBeInserted)
+                GlobalScope.launch {
+                    createTaskUseCase.execute(taskEntityToBeInserted)
+                    getTasksFromDatabase()
+                }
             },
             onUpdateClicked = {
                     taskToBeUpdated ->
@@ -385,7 +371,10 @@ class MainActivity : AppCompatActivity() {
                     name = taskToBeUpdated.name,
                     category = taskToBeUpdated.category
                 )
-                updateTask(taskEntityToBeUpdated)
+                GlobalScope.launch {
+                    UpdateTaskUseCase.execute(taskEntityToBeUpdated)
+                    getTasksFromDatabase()
+                }
             },
             onDeleteClicked = onDeleteClicked
         )
@@ -400,7 +389,10 @@ class MainActivity : AppCompatActivity() {
                 name = categoryName,
                 isSelected = false
             )
-            insertCategory(categoryEntity)
+            GlobalScope.launch {
+                createCategoryUseCase.execute(categoryEntity)
+                getCategoriesFromDatabase()
+            }
         }
         createCategoryBottomSheet.show(
             supportFragmentManager, "create_category")
