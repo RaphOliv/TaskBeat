@@ -1,10 +1,26 @@
+import java.util.Properties
+import java.io.FileInputStream
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.kapt")
 }
 
+val keystorePropertiesFile = rootProject.file("local.properties")
+val keystoreProperties = Properties()
+keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+
 android {
+    signingConfigs {
+        create("config") {
+            keyAlias = keystoreProperties["keyAlias"] as String
+            keyPassword = keystoreProperties["keyPassword"] as String
+            storeFile = file(keystoreProperties["storeFile"] as String)
+            storePassword = keystoreProperties["storePassword"] as String
+        }
+    }
+
     namespace = "com.raphaeloliveira.taskbeat"
     compileSdk = 34
 
@@ -25,6 +41,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            ndk.debugSymbolLevel = "FULL"
         }
     }
 
@@ -38,6 +55,7 @@ android {
     buildFeatures{
         viewBinding = true
     }
+    ndkVersion = "27.0.11902837 rc2"
 }
 
 dependencies {
