@@ -13,7 +13,7 @@ keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 
 android {
     signingConfigs {
-        create("config") {
+        create("release") {
             keyAlias = keystoreProperties["keyAlias"] as String
             keyPassword = keystoreProperties["keyPassword"] as String
             storeFile = file(keystoreProperties["storeFile"] as String)
@@ -32,16 +32,21 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig = signingConfigs.getByName("release")
     }
 
     buildTypes {
-        release {
-            isMinifyEnabled = false
+        getByName("release") {
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
             ndk.debugSymbolLevel = "FULL"
+        }
+        getByName("debug") {
+            isDebuggable = true
+            isMinifyEnabled = false
         }
     }
 
@@ -53,6 +58,7 @@ android {
         jvmTarget = "1.8"
     }
     buildFeatures{
+        buildConfig = true
         viewBinding = true
     }
     ndkVersion = "27.0.11902837 rc2"
