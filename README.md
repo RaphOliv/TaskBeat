@@ -1,13 +1,8 @@
-
-![license][license-url]
 ![kotlin][language-url]
 ![repo size][reposize-url]
 ![release][release-url]
 
 
-
-
-[license-url]: https://img.shields.io/github/license/RaphOliv/TaskBeat
 [language-url]: https://img.shields.io/github/languages/top/RaphOliv/TaskBeat
 [reposize-url]: https://img.shields.io/github/repo-size/RaphOliv/TaskBeat
 [release-url]: https://img.shields.io/github/v/release/RaphOliv/TaskBeat
